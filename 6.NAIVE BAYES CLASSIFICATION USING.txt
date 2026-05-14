@@ -1,0 +1,255 @@
+# NAIVE BAYES CLASSIFICATION USING IRIS DATASET
+# =====================================================
+
+# -----------------------------
+# IMPORT REQUIRED LIBRARIES
+# -----------------------------
+
+import pandas as pd
+
+# train_test_split :
+# Used to divide dataset into training data and testing data
+from sklearn.model_selection import train_test_split
+
+# GaussianNB :
+# Naive Bayes classification algorithm
+# Works best for continuous numeric data
+from sklearn.naive_bayes import GaussianNB
+
+# Metrics used to evaluate model performance
+from sklearn.metrics import (
+    confusion_matrix,
+    accuracy_score,
+    precision_score,
+    recall_score
+)
+
+# =====================================================
+# WHAT IS NAIVE BAYES ?
+# =====================================================
+
+# Naive Bayes is a supervised machine learning algorithm
+# mainly used for classification problems.
+
+# It is based on Bayes Theorem.
+
+# Bayes Theorem Formula:
+#
+#            P(A|B) = [ P(B|A) * P(A) ] / P(B)
+#
+# Where:
+# P(A|B) = Probability of A when B occurs
+# P(B|A) = Probability of B when A occurs
+# P(A)   = Probability of A
+# P(B)   = Probability of B
+#
+# "Naive" means:
+# The algorithm assumes all features are independent.
+
+# =====================================================
+# STEP 1 : LOAD DATASET
+# =====================================================
+
+# Read iris.csv file
+# Dataset contains flower measurements
+data = pd.read_csv("iris.csv")
+
+# Display first 5 rows
+print("FIRST 5 RECORDS")
+print(data.head())
+
+# =====================================================
+# ABOUT IRIS DATASET
+# =====================================================
+
+# Input Features:
+# 1. sepal_length
+# 2. sepal_width
+# 3. petal_length
+# 4. petal_width
+#
+# Output Class:
+# species
+#
+# Classes:
+# - Iris-setosa
+# - Iris-versicolor
+# - Iris-virginica
+
+# =====================================================
+# STEP 2 : INPUT AND OUTPUT SEPARATION
+# =====================================================
+
+# X = Independent/Input variables
+# Select all columns except last column
+X = data.iloc[:, :-1]
+
+# y = Dependent/Target variable
+# Select last column
+y = data.iloc[:, -1]
+
+print("\nINPUT FEATURES")
+print(X.head())
+
+print("\nTARGET VALUES")
+print(y.head())
+
+# =====================================================
+# STEP 3 : SPLIT DATASET
+# =====================================================
+
+# train_test_split() divides data into:
+# Training Data -> used to train model
+# Testing Data  -> used to test model
+
+# test_size = 0.25
+# Means 25% data used for testing
+# Remaining 75% used for training
+
+# random_state = 42
+# Gives same random result every time
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.25,
+    random_state=42
+)
+
+print("\nTraining Data Size =", len(X_train))
+print("Testing Data Size =", len(X_test))
+
+# =====================================================
+# STEP 4 : CREATE AND TRAIN MODEL
+# =====================================================
+
+# Create object of GaussianNB model
+model = GaussianNB()
+
+# fit() is used to train model
+# Model learns patterns from training data
+model.fit(X_train, y_train)
+
+print("\nModel Training Completed")
+
+# =====================================================
+# STEP 5 : PREDICTION
+# =====================================================
+
+# predict() gives predicted class labels
+y_pred = model.predict(X_test)
+
+print("\nPREDICTED VALUES")
+print(y_pred)
+
+print("\nACTUAL VALUES")
+print(y_test.values)
+
+# =====================================================
+# STEP 6 : CONFUSION MATRIX
+# =====================================================
+
+# Confusion Matrix compares:
+# Actual Output vs Predicted Output
+
+# Matrix Terms:
+#
+# TP = True Positive
+# TN = True Negative
+# FP = False Positive
+# FN = False Negative
+
+cm = confusion_matrix(y_test, y_pred)
+
+print("\nCONFUSION MATRIX")
+print(cm)
+
+# =====================================================
+# STEP 7 : PERFORMANCE METRICS
+# =====================================================
+
+# ---------------- ACCURACY ----------------
+#
+# Accuracy tells:
+# How many predictions are correct
+#
+# Formula:
+#
+# Accuracy = (TP + TN) / (TP + TN + FP + FN)
+
+accuracy = accuracy_score(y_test, y_pred)
+
+# ---------------- ERROR RATE ----------------
+#
+# Error Rate tells:
+# How many predictions are wrong
+#
+# Formula:
+#
+# Error Rate = 1 - Accuracy
+
+error_rate = 1 - accuracy
+
+# ---------------- PRECISION ----------------
+#
+# Precision tells:
+# Out of predicted positive values,
+# how many are actually correct
+#
+# Formula:
+#
+# Precision = TP / (TP + FP)
+
+precision = precision_score(
+    y_test,
+    y_pred,
+    average='macro'
+)
+
+# average='macro'
+# Calculates precision for all classes
+# and returns average value
+
+# ---------------- RECALL ----------------
+#
+# Recall tells:
+# Out of actual positive values,
+# how many are correctly predicted
+#
+# Formula:
+#
+# Recall = TP / (TP + FN)
+
+recall = recall_score(
+    y_test,
+    y_pred,
+    average='macro'
+)
+
+# =====================================================
+# STEP 8 : DISPLAY FINAL RESULTS
+# =====================================================
+
+print("\n========== FINAL RESULTS ==========")
+
+print("Accuracy     =", accuracy)
+
+print("Error Rate   =", error_rate)
+
+print("Precision    =", precision)
+
+print("Recall       =", recall)
+
+# =====================================================
+# CONCLUSION
+# =====================================================
+
+# Naive Bayes is:
+# - Simple and fast classification algorithm
+# - Works well on small datasets
+# - Gives good accuracy
+# - Mainly used for:
+#     * Email Spam Detection
+#     * Text Classification
+#     * Medical Diagnosis
+#     * Prediction Systems

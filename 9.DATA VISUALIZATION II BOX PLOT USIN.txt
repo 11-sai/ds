@@ -1,0 +1,110 @@
+ DATA VISUALIZATION II BOX PLOT USING TITANIC DATASET
+# ==========================================
+
+# ------------------------------------------------
+# STEP 1 : Import Libraries
+# ------------------------------------------------
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# seaborn -> used for statistical graphs
+# matplotlib -> used to display graphs
+
+# ------------------------------------------------
+# STEP 2 : Load Titanic Dataset
+# ------------------------------------------------
+
+# Load Titanic dataset from seaborn
+titanic = sns.load_dataset('titanic')
+
+# Dataset contains:
+# age, gender, class, fare, survival info etc.
+
+# ------------------------------------------------
+# STEP 3 : Display First 5 Records
+# ------------------------------------------------
+
+print("------------ FIRST 5 RECORDS ------------")
+
+# head() shows first 5 rows
+print(titanic.head())
+
+# ------------------------------------------------
+# STEP 4 : Draw Box Plot
+# ------------------------------------------------
+
+# boxplot() is used to show data distribution
+
+# x='sex'
+# -> male and female categories
+
+# y='age'
+# -> age values shown vertically
+
+# hue='survived'
+# -> separates survived and not survived using colors
+
+sns.boxplot(
+    x='sex',
+    y='age',
+    hue='survived',
+    data=titanic
+)
+
+# ------------------------------------------------
+# STEP 5 : Add Title and Labels
+# ------------------------------------------------
+
+# Graph title
+plt.title("Age Distribution based on Gender and Survival")
+
+# X-axis label
+plt.xlabel("Gender")
+
+# Y-axis label
+plt.ylabel("Age")
+
+# ------------------------------------------------
+# STEP 6 : Display Plot
+# ------------------------------------------------
+
+# show() displays graph
+plt.show()
+
+# ==================================================
+# IMPORTANT THEORY / VIVA POINTS
+# ==================================================
+
+# 1. What is Box Plot?
+# -> Graph used to show distribution of numerical data.
+
+# 2. Uses of Box Plot:
+# -> Find spread of data
+# -> Detect outliers
+# -> Compare categories
+
+# 3. What are Outliers?
+# -> Extremely high or low values compared to other data.
+
+# 4. Meaning of Box Plot Parts:
+# -> Middle line = Median
+# -> Box = Interquartile Range (Q1 to Q3)
+# -> Whiskers = Minimum and Maximum values
+# -> Dots outside = Outliers
+
+# 5. What is hue in seaborn?
+# -> Separates categories using different colors.
+
+# 6. Observation from Graph:
+# -> Compare age distribution of male/female passengers
+# -> Compare survived and non-survived passengers
+
+# ==================================================
+# OUTPUT:
+# 1. First 5 dataset records
+# 2. Box plot showing:
+#    - Gender
+#    - Age distribution
+#    - Survival comparison
+# ==================================================

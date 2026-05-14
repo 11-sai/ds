@@ -1,0 +1,188 @@
+# LOGISTIC REGRESSION USING SOCIAL NETWORK ADS DATASET
+# =========================================================
+
+# ---------------------------------------------------------
+# STEP 1 : Import Required Libraries
+# ---------------------------------------------------------
+
+# pandas -> used for handling dataset and tables
+import pandas as pd
+
+# train_test_split -> used to divide dataset into train and test data
+from sklearn.model_selection import train_test_split
+
+# LogisticRegression -> machine learning classification algorithm
+from sklearn.linear_model import LogisticRegression
+
+# Metrics used for model evaluation
+from sklearn.metrics import (
+    confusion_matrix,
+    accuracy_score,
+    precision_score,
+    recall_score
+)
+
+# ---------------------------------------------------------
+# STEP 2 : Load Dataset
+# ---------------------------------------------------------
+
+# Read CSV file
+data = pd.read_csv("Social_Network_Ads.csv")
+
+# Display first 5 rows
+print("========== DATASET PREVIEW ==========")
+print(data.head())
+
+# ---------------------------------------------------------
+# STEP 3 : Select Input and Output
+# ---------------------------------------------------------
+
+# Input Features (Independent Variables)
+# These values are used to predict output
+X = data[['Age', 'EstimatedSalary']]
+
+# Output Variable (Dependent Variable)
+# Purchased = 0 or 1
+y = data['Purchased']
+
+# ---------------------------------------------------------
+# STEP 4 : Split Dataset
+# ---------------------------------------------------------
+
+# 75% data -> Training
+# 25% data -> Testing
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,                  # input data
+    y,                  # output data
+    test_size=0.25,    # 25% test data
+    random_state=0     # same random split every time
+)
+
+# ---------------------------------------------------------
+# STEP 5 : Create Logistic Regression Model
+# ---------------------------------------------------------
+
+# Create object of Logistic Regression
+model = LogisticRegression()
+
+# Train model using training data
+model.fit(X_train, y_train)
+
+# ---------------------------------------------------------
+# STEP 6 : Predict Test Data
+# ---------------------------------------------------------
+
+# Predict output for testing data
+y_pred = model.predict(X_test)
+
+# Display predictions
+print("\n========== PREDICTED VALUES ==========")
+print(y_pred)
+
+# ---------------------------------------------------------
+# STEP 7 : Create Confusion Matrix
+# ---------------------------------------------------------
+
+# Confusion Matrix compares actual and predicted values
+
+cm = confusion_matrix(y_test, y_pred)
+
+print("\n========== CONFUSION MATRIX ==========")
+print(cm)
+
+# Extract:
+# TN = True Negative
+# FP = False Positive
+# FN = False Negative
+# TP = True Positive
+
+TN, FP, FN, TP = cm.ravel()
+
+# ---------------------------------------------------------
+# STEP 8 : Calculate Performance Metrics
+# ---------------------------------------------------------
+
+# Accuracy Formula:
+# Accuracy = (TP + TN) / Total Predictions
+
+accuracy = accuracy_score(y_test, y_pred)
+
+# Precision Formula:
+# Precision = TP / (TP + FP)
+
+precision = precision_score(y_test, y_pred)
+
+# Recall Formula:
+# Recall = TP / (TP + FN)
+
+recall = recall_score(y_test, y_pred)
+
+# Error Rate Formula:
+# Error Rate = 1 - Accuracy
+
+error_rate = 1 - accuracy
+
+# ---------------------------------------------------------
+# STEP 9 : Display Results
+# ---------------------------------------------------------
+
+print("\n========== CONFUSION MATRIX VALUES ==========")
+
+print("True Positive (TP)  :", TP)
+print("False Positive (FP) :", FP)
+print("True Negative (TN)  :", TN)
+print("False Negative (FN) :", FN)
+
+print("\n========== PERFORMANCE METRICS ==========")
+
+print("Accuracy    :", accuracy)
+print("Error Rate  :", error_rate)
+print("Precision   :", precision)
+print("Recall      :", recall)
+
+# ---------------------------------------------------------
+# IMPORTANT THEORY
+# ---------------------------------------------------------
+
+# Logistic Regression is used for classification problems.
+#
+# It predicts probability using Sigmoid Function:
+#
+#           1
+# P = ----------------
+#      1 + e^(-z)
+#
+# where:
+# z = b0 + b1x1 + b2x2
+#
+# x1 = Age
+# x2 = EstimatedSalary
+#
+# Output:
+# Near 0 -> Not Purchased
+# Near 1 -> Purchased
+#
+# ---------------------------------------------------------
+# CONFUSION MATRIX FORMAT
+# ---------------------------------------------------------
+#
+#              Predicted
+#             0       1
+#
+# Actual 0   TN      FP
+# Actual 1   FN      TP
+#
+# ---------------------------------------------------------
+# METRICS FORMULAS
+# ---------------------------------------------------------
+#
+# Accuracy  = (TP + TN) / (TP + TN + FP + FN)
+#
+# Precision = TP / (TP + FP)
+#
+# Recall    = TP / (TP + FN)
+#
+# ErrorRate = (FP + FN) / Total
+#
+# ---------------------------------------------------------

@@ -1,0 +1,171 @@
+DATA VISUALIZATION III IRIS FLOWER DATASET ANALYSIS
+# ==========================================
+
+# ------------------------------------------------
+# STEP 1 : Import Required Libraries
+# ------------------------------------------------
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# pandas      -> used for handling dataset
+# seaborn     -> used for visualization
+# matplotlib  -> used for plotting graphs
+
+# ------------------------------------------------
+# STEP 2 : Load Iris Dataset
+# ------------------------------------------------
+
+# Load inbuilt iris dataset from seaborn
+iris = sns.load_dataset('iris')
+
+# iris dataset contains:
+# sepal length
+# sepal width
+# petal length
+# petal width
+# species of flower
+
+# ------------------------------------------------
+# STEP 3 : Display First 5 Records
+# ------------------------------------------------
+
+print("------------ FIRST 5 RECORDS ------------")
+
+# head() displays first 5 rows
+print(iris.head())
+
+# Explanation:
+# Helps understand structure of dataset
+
+# ------------------------------------------------
+# STEP 4 : Display Features and Data Types
+# ------------------------------------------------
+
+print("\n------------ FEATURES AND DATA TYPES ------------")
+
+# dtypes shows datatype of each column
+print(iris.dtypes)
+
+# Explanation:
+# Numeric Features:
+# sepal_length
+# sepal_width
+# petal_length
+# petal_width
+
+# Categorical Feature:
+# species
+
+# ------------------------------------------------
+# STEP 5 : Statistical Summary
+# ------------------------------------------------
+
+print("\n------------ STATISTICAL SUMMARY ------------")
+
+# describe() gives:
+# count
+# mean
+# standard deviation
+# minimum value
+# maximum value
+# quartiles
+
+print(iris.describe())
+
+# Explanation:
+# Helps understand overall dataset statistics
+
+# ------------------------------------------------
+# STEP 6 : Histogram for Each Feature
+# ------------------------------------------------
+
+# Histogram shows frequency distribution
+
+iris.hist(figsize=(10,8))
+
+# Add title
+plt.suptitle("Histogram of Iris Features")
+
+# Display graph
+plt.show()
+
+# Explanation:
+# Histogram helps understand:
+# data distribution
+# concentration of values
+# frequency of values
+
+# ------------------------------------------------
+# STEP 7 : Boxplot for Each Feature
+# ------------------------------------------------
+
+# Boxplot shows:
+# median
+# quartiles
+# spread
+# outliers
+
+plt.figure(figsize=(10,6))
+
+sns.boxplot(data=iris)
+
+# Add title
+plt.title("Boxplot of Iris Features")
+
+# Display graph
+plt.show()
+
+# Explanation:
+# Boxplot helps compare distributions
+# and identify outliers in dataset
+
+# ------------------------------------------------
+# STEP 8 : Inference
+# ------------------------------------------------
+
+print("\n------------ INFERENCE ------------")
+
+print("1. Iris dataset contains numeric and categorical features.")
+
+print("2. Numeric Features:")
+print("   sepal_length, sepal_width, petal_length, petal_width")
+
+print("3. Categorical Feature:")
+print("   species")
+
+print("4. Histograms show frequency distribution of features.")
+
+print("5. Boxplot helps identify outliers and spread of data.")
+
+print("6. Some outliers are present in sepal_width feature.")
+
+# ==================================================
+# IMPORTANT THEORY / VIVA QUESTIONS
+# ==================================================
+
+# 1. What is Data Visualization?
+# -> Representation of data using graphs and charts.
+
+# 2. What is Histogram?
+# -> Graph showing frequency distribution of numerical data.
+
+# 3. What is Boxplot?
+# -> Graph showing median, quartiles, and outliers.
+
+# 4. What are Outliers?
+# -> Extremely high or low values compared to normal data.
+
+# 5. What is Numeric Data?
+# -> Data represented using numbers.
+
+# 6. What is Categorical Data?
+# -> Data represented using categories.
+
+# 7. What does describe() function do?
+# -> Gives statistical summary of dataset.
+
+# 8. What does dtypes do?
+# -> Displays datatype of each feature.
+

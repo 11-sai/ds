@@ -1,0 +1,253 @@
+# TEXT ANALYTICS USING NLTK + TF-IDF
+# =====================================================
+
+# Text Analytics:
+# Process of extracting useful information from text
+
+# NLP = Natural Language Processing
+
+# Applications:
+# - Chatbot
+# - Spam Detection
+# - Sentiment Analysis
+# - Search Engine
+
+# =====================================================
+# STEP 1 : IMPORT LIBRARIES
+# =====================================================
+
+import nltk
+
+# word_tokenize() -> splits sentence into words
+from nltk.tokenize import word_tokenize
+
+# stopwords -> common unnecessary words
+from nltk.corpus import stopwords
+
+# PorterStemmer -> used for stemming
+from nltk.stem import PorterStemmer
+
+# WordNetLemmatizer -> used for lemmatization
+from nltk.stem import WordNetLemmatizer
+
+# pos_tag() -> identifies grammar role
+from nltk import pos_tag
+
+# TfidfVectorizer -> converts text into numbers
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# =====================================================
+# STEP 2 : DOWNLOAD NLTK DATA
+# =====================================================
+
+# punkt -> tokenizer data
+nltk.download('punkt')
+
+# required in latest nltk version
+nltk.download('punkt_tab')
+
+# stop words collection
+nltk.download('stopwords')
+
+# dictionary for lemmatization
+nltk.download('wordnet')
+
+# extra word database support
+nltk.download('omw-1.4')
+
+# POS tagger download
+nltk.download('averaged_perceptron_tagger_eng')
+
+# =====================================================
+# STEP 3 : INPUT TEXT
+# =====================================================
+
+text = "Data Science is an important field in Artificial Intelligence."
+
+print("\nORIGINAL TEXT:")
+print(text)
+
+# =====================================================
+# STEP 4 : TOKENIZATION
+# =====================================================
+
+# Tokenization:
+# Splitting sentence into words
+
+# Example:
+# "I love AI"
+# becomes
+# ['I', 'love', 'AI']
+
+tokens = word_tokenize(text)
+
+print("\nTOKENS:")
+print(tokens)
+
+# =====================================================
+# STEP 5 : POS TAGGING
+# =====================================================
+
+# POS = Part Of Speech
+
+# Common POS Tags:
+# NN -> Noun
+# VB -> Verb
+# JJ -> Adjective
+
+# Example:
+# ('Data', 'NN')
+
+pos_tags = pos_tag(tokens)
+
+print("\nPOS TAGGING:")
+print(pos_tags)
+
+# =====================================================
+# STEP 6 : STOP WORD REMOVAL
+# =====================================================
+
+# Stop Words:
+# Frequently used unnecessary words
+
+# Examples:
+# is, am, the, in, on
+
+# Benefit:
+# Removes unwanted words
+# Improves performance
+
+stop_words = set(stopwords.words('english'))
+
+filtered_words = [
+    word for word in tokens
+    if word.lower() not in stop_words
+]
+
+print("\nAFTER STOP WORD REMOVAL:")
+print(filtered_words)
+
+# =====================================================
+# STEP 7 : STEMMING
+# =====================================================
+
+# Stemming:
+# Converts word into root form
+
+# Examples:
+# playing -> play
+# studies -> studi
+
+# Important:
+# May produce invalid words
+
+ps = PorterStemmer()
+
+stemmed_words = [ps.stem(word) for word in filtered_words]
+
+print("\nSTEMMED WORDS:")
+print(stemmed_words)
+
+# =====================================================
+# STEP 8 : LEMMATIZATION
+# =====================================================
+
+# Lemmatization:
+# Converts word into meaningful base form
+
+# Examples:
+# running -> run
+# better -> good
+
+# Better than stemming
+# Gives meaningful words
+
+lemmatizer = WordNetLemmatizer()
+
+lemmatized_words = [
+    lemmatizer.lemmatize(word)
+    for word in filtered_words
+]
+
+print("\nLEMMATIZED WORDS:")
+print(lemmatized_words)
+
+# =====================================================
+# DIFFERENCE :
+# STEMMING vs LEMMATIZATION
+# =====================================================
+
+# Stemming:
+# - Faster
+# - May give invalid word
+
+# Lemmatization:
+# - Slower
+# - Gives meaningful word
+
+# =====================================================
+# STEP 9 : TF-IDF
+# =====================================================
+
+# TF-IDF Full Form:
+# Term Frequency - Inverse Document Frequency
+
+# Purpose:
+# Finds important words in document
+
+# TF Formula:
+#
+# TF = Number of times word appears
+#      --------------------------------
+#      Total words in document
+
+# IDF Formula:
+#
+# IDF = log(
+#        Total Documents
+#        ----------------------
+#        Documents containing word
+#      )
+
+# TF-IDF Formula:
+#
+# TF-IDF = TF * IDF
+
+# Higher TF-IDF value:
+# More important word
+
+documents = [
+    "Data Science is important",
+    "Artificial Intelligence uses data",
+    "Data Analytics and Data Science"
+]
+
+# Create TF-IDF object
+vectorizer = TfidfVectorizer()
+
+# Convert text into TF-IDF matrix
+tfidf_matrix = vectorizer.fit_transform(documents)
+
+print("\nTF-IDF FEATURES:")
+print(vectorizer.get_feature_names_out())
+
+print("\nTF-IDF MATRIX:")
+print(tfidf_matrix.toarray())
+
+====
+
+# In this practical we performed:
+#
+# 1. Tokenization
+# 2. POS Tagging
+# 3. Stop Word Removal
+# 4. Stemming
+# 5. Lemmatization
+# 6. TF-IDF
+#
+# Used in:
+# - NLP
+# - Chatbots
+# - AI systems
+# - Search Engines
+# - Sentiment Analysis

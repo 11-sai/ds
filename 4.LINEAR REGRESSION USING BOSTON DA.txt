@@ -1,0 +1,169 @@
+# LINEAR REGRESSION USING BOSTON DATASET
+
+# ------------------------------------------
+# STEP 1 : Import Required Libraries
+# ------------------------------------------
+
+import pandas as pd      # Used for data handling and reading CSV file
+
+import numpy as np       # Used for numerical calculations
+
+# Used to split dataset into training and testing data
+from sklearn.model_selection import train_test_split
+
+# Linear Regression algorithm
+from sklearn.linear_model import LinearRegression
+
+# Used to evaluate model performance
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Used for graph plotting
+import matplotlib.pyplot as plt
+
+
+# ------------------------------------------
+# STEP 2 : Load Dataset
+# ------------------------------------------
+
+# Read Boston.csv file
+df = pd.read_csv("Boston.csv")
+
+# Display first 5 rows of dataset
+print("------------ FIRST 5 RECORDS ------------")
+print(df.head())
+
+
+# ------------------------------------------
+# STEP 3 : Check Missing Values
+# ------------------------------------------
+
+# Check null/missing values in each column
+print("\n------------ MISSING VALUES ------------")
+print(df.isnull().sum())
+
+
+# ------------------------------------------
+# STEP 4 : Handle Missing Values
+# ------------------------------------------
+
+# Replace missing numeric values with column mean
+df = df.fillna(df.mean(numeric_only=True))
+
+
+# ------------------------------------------
+# STEP 5 : Separate Input and Output
+# ------------------------------------------
+
+# Input Features (Independent Variables)
+# axis=1 means remove column
+X = df.drop("MEDV", axis=1)
+
+# Output Variable (Target Variable)
+# MEDV contains house prices
+y = df["MEDV"]
+
+
+# ------------------------------------------
+# STEP 6 : Split Dataset
+# ------------------------------------------
+
+# Split dataset into:
+# 80% Training Data
+# 20% Testing Data
+
+X_train, X_test, y_train, y_test = train_test_split(
+    
+    X,          # Input data
+    
+    y,          # Output data
+    
+    test_size=0.2,     # 20% data for testing
+    
+    random_state=0     # Same random split every run
+)
+
+
+# ------------------------------------------
+# STEP 7 : Create Linear Regression Model
+# ------------------------------------------
+
+# Create model object
+model = LinearRegression()
+
+
+# ------------------------------------------
+# STEP 8 : Train Model
+# ------------------------------------------
+
+# Train model using training data
+# Model learns relationship between input and output
+model.fit(X_train, y_train)
+
+
+# ------------------------------------------
+# STEP 9 : Predict Values
+# ------------------------------------------
+
+# Predict house prices using testing data
+y_pred = model.predict(X_test)
+
+
+# ------------------------------------------
+# STEP 10 : Display Actual and Predicted Values
+# ------------------------------------------
+
+print("\n------------ ACTUAL VALUES ------------")
+
+# Display first 10 actual prices
+print(y_test.values[:10])
+
+
+print("\n------------ PREDICTED VALUES ------------")
+
+# Display first 10 predicted prices
+print(y_pred[:10])
+
+
+# ------------------------------------------
+# STEP 11 : Model Evaluation
+# ------------------------------------------
+
+# Mean Squared Error
+# Lower value means better prediction
+mse = mean_squared_error(y_test, y_pred)
+
+# R2 Score
+# Closer to 1 means better accuracy
+r2 = r2_score(y_test, y_pred)
+
+
+print("\n------------ MODEL PERFORMANCE ------------")
+
+print("Mean Squared Error :", mse)
+
+print("R2 Score :", r2)
+
+
+# ------------------------------------------
+# STEP 12 : Visualization
+# ------------------------------------------
+
+# Scatter plot of actual vs predicted values
+plt.scatter(y_test, y_pred)
+
+# X-axis label
+plt.xlabel("Actual Price")
+
+# Y-axis label
+plt.ylabel("Predicted Price")
+
+# Graph title
+plt.title("Actual vs Predicted Prices")
+
+# Ideal prediction line
+# If points are close to line, model is good
+plt.plot(y_test, y_test)
+
+# Display graph
+plt.show()
+

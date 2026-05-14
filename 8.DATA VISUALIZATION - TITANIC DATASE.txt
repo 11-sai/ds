@@ -1,0 +1,112 @@
+ DATA VISUALIZATION - TITANIC DATASET
+# ==========================================
+
+# ------------------------------------------------
+# STEP 1 : Import Libraries
+# ------------------------------------------------
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# seaborn -> used for statistical graphs
+# matplotlib -> used to display graphs
+
+# ------------------------------------------------
+# STEP 2 : Load Titanic Dataset
+# ------------------------------------------------
+
+# Load Titanic dataset from seaborn
+titanic = sns.load_dataset('titanic')
+
+# ------------------------------------------------
+# STEP 3 : Display First 5 Records
+# ------------------------------------------------
+
+print("------------ FIRST 5 RECORDS ------------")
+
+# head() displays first 5 rows
+print(titanic.head())
+
+# ------------------------------------------------
+# STEP 4 : Survival Count Plot
+# ------------------------------------------------
+
+# countplot() counts categorical values
+# survived :
+# 0 = Not Survived
+# 1 = Survived
+
+sns.countplot(x='survived', data=titanic)
+
+# Add graph title
+plt.title("Survival Count")
+
+# X-axis label
+plt.xlabel("Survived")
+
+# Y-axis label
+plt.ylabel("Number of Passengers")
+
+# Display graph
+plt.show()
+
+# ------------------------------------------------
+# STEP 5 : Survival Count Based on Gender
+# ------------------------------------------------
+
+# hue='sex' separates male and female data
+
+sns.countplot(x='survived', hue='sex', data=titanic)
+
+plt.title("Survival based on Gender")
+
+plt.xlabel("Survived")
+
+plt.ylabel("Number of Passengers")
+
+plt.show()
+
+# Observation:
+# Female survival rate is higher than male
+
+# ------------------------------------------------
+# STEP 6 : Histogram of Fare
+# ------------------------------------------------
+
+# Histogram shows distribution of numerical data
+
+# fare -> ticket price
+# bins=20 -> divide data into 20 groups
+
+plt.hist(titanic['fare'], bins=20)
+
+plt.title("Fare Distribution")
+
+plt.xlabel("Fare")
+
+plt.ylabel("Number of Passengers")
+
+plt.show()
+
+# Observation:
+# Most passengers paid low fare
+
+# ==================================================
+# IMPORTANT VIVA POINTS
+# ==================================================
+
+# 1. Data Visualization:
+#    Representation of data using charts/graphs
+
+# 2. countplot():
+#    Used for categorical data counting
+
+# 3. Histogram:
+#    Used for numerical data distribution
+
+# 4. hue:
+#    Separates data using colors
+
+# 5. Titanic Dataset:
+#    Famous dataset containing passenger information
+# ==================================================
